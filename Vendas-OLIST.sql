@@ -10,7 +10,6 @@ SELECT * FROM olist_sellers_dataset;
 SELECT * FROM product_category_name_translation;
 
 
-
 */
 
 /* CRIAR AS TABELAS DE PRODUCAO
@@ -92,6 +91,10 @@ SELECT * FROM olist_order_items_dataset
 ----------- Tabela order_payments ------------
 INSERT INTO order_payments
 select * from olist_order_payments_dataset;
+
+----------- Tabela order_reviews ------------
+INSERT INTO order_reviews
+select * from olist_order_reviews_dataset;
 */
 
 
@@ -107,9 +110,38 @@ UPDATE olist_order_items_dataset SET shipping_limit_date = NULL
 WHERE shipping_limit_date = ''
 
 
+ALTER TABLE order_reviews
+MODIFY COLUMN review_comment_message varchar(255) COLLATE utf8mb4_unicode_ci;
+
+ALTER TABLE order_reviews
+MODIFY COLUMN review_comment_title varchar(255) COLLATE utf8mb4_unicode_ci;
+
+SET SQL_SAFE_UPDATES=0;
+UPDATE olist_order_reviews_dataset 
+SET review_answer_timestamp = NULL
+WHERE review_answer_timestamp LIKE '%a%';
+
 */
 
--- Corrigir o bug na importacao dos dados. a linha 315 da tabela review_comment_message
+
+
+SELECT * FROM olist_orders_dataset;
+
+
+-- ----------- Tabela orders ------------
+CREATE TABLE orders
+(	
+	order_id NVARCHAR (150),
+	customer_id NVARCHAR (150),
+	order_status CHAR (20),
+	order_purchase_timestamp DATETIME,
+	order_approved_at DATETIME,
+	order_delivered_carrier_date DATETIME,
+	order_delivered_customer_date DATETIME,
+	order_estimated_delivery_date DATETIME
+    
+)
+
 
 
 
